@@ -9,7 +9,7 @@ class Game:
         #Games variables
         self.screen = pygame.display.set_mode((1200, 600))
         self.running, self.game, self.inGame, self.end_round, self.bataille = True, False, False, False, False  #Differents etats du jeux
-        self.clock = pygame.time.Clock()  
+        self.clock = pygame.time.Clock()
         self.round_end_time = pygame.time.get_ticks()
 
         #Differents etats dans une manche
@@ -20,12 +20,12 @@ class Game:
         self.Menu = Menu()
         self.jeuCartes = JeuCartes()
         self.carteEnJeu = []
-        
+
         #Gerer les differentes positions des cartes, pour faire en sorte quelle soit cote a cote horizontalement lors d'une bataille.
         liste = [x for x in range(26) for _ in range(2)]
         self.pos_carte = [pygame.Rect(530 + 80 * liste[i], 330, 58, 98) if i %2 == 0 else pygame.Rect(530 - 80 * liste[i], 170, 58, 98) for i in range(len(liste))]
 
-        
+
         self.win = False
 
     def event(self):
@@ -36,10 +36,10 @@ class Game:
                 self.running = False
 
             elif event.type == pygame.KEYDOWN and not self.game:  #Si l'utilisateur entre une touche lors du menu.
-                    self.Menu.getPLayerName(event)   
-                
+                    self.Menu.getPLayerName(event)
+
             #Gestion de la fin d'une manche.
-            if self.end_round and time - self.round_end_time >= 2300: 
+            if self.end_round and time - self.round_end_time >= 2300:
                 self.playerWin, self.playerTour=-1, 0
                 self.end_round  = False
                 self.round_end_time = time
@@ -60,10 +60,10 @@ class Game:
                 self.playerEnJeu = (Player(self.Menu.names[0], paquet1), Player(self.Menu.names[1], paquet2))
                 self.inGame = True
             else:
-                if self.playerEnJeu[self.playerTour].paquet.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0] and self.playerTour >= 0: #L'orsque que le joueur a qui c'est le tour appuie sur son jeu. 
+                if self.playerEnJeu[self.playerTour].paquet.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0] and self.playerTour >= 0: #L'orsque que le joueur a qui c'est le tour appuie sur son jeu.
                     self.carteEnJeu.append(self.playerEnJeu[self.playerTour].tirer())
                     self.playerTour = 1 - self.playerTour
-    
+
                 #Lorsque les deux joueurs ont tirer une carte.
                 if not self.end_round and (len(self.carteEnJeu) == 2+self.batailleIndex and len(self.carteEnJeu) !=  0 and not self.bataille ):
                     self.playerTour = -1
@@ -79,7 +79,7 @@ class Game:
                         self.bataille = True
                         self.end_round = True
                         self.batailleIndex += 2
-            
+
                 if self.playerEnJeu[0].paquet.taille() == 0 or self.playerEnJeu[1].paquet.taille() == 0:  #Gestion de la fin d'une partie.
                     self.playerWin  = 1 if self.playerEnJeu[1].paquet.taille() == 0 else 2
                     self.win  = True
