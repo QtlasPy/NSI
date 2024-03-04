@@ -1,3 +1,5 @@
-Programme permettant la resolution du problemme des tours d'hanoi en version graphique avec le module pygame.
+<h1> Hanoi solver </h1>
 
-ps: N'oubliez pas d'appuyer sur entree quand vous rentrer le nombre de disque(s).
+<p> A python program to solve the hanoi tower problem with N disks.  </p>
+
+<h2> Install </h2>
